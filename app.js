@@ -19,7 +19,7 @@ app.use(require("express-session")({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
+// Used for reading the session and taking the data from a session to encode and decode it.
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 passport.use(new LocalStrategy(User.authenticate()));
@@ -58,7 +58,8 @@ app.get("/login",(req,res)=>{
     res.render("login");
 });
 //login Logic
-//Using middleWare// its some code that runs before our final route callback
+//Using middleWare// its used so as to run some code that runs before our final route callback as in isLoggedIn() 
+//Middleware isLoggedIn has been used to stop any random unauthorized user from accessing the /secret page.
 app.post("/login", passport.authenticate("local",{
     successRedirect:"/secret",
     failureRedirect:"/login"
